@@ -28,3 +28,25 @@ npm install @nestjs/swagger swagger-ui-express
 npm install class-validator class-transformer
 
 Created Data Transfer Objects
+
+Added validators for DTOs
+
+# Data Base Creation & Set Up (PostgreSQL)
+
+npm install @nestjs/typeorm typeorm pg
+
+npm install @nestjs/config
+
+Created .env
+
+Created DB locally
+
+Re-run the app to view connection established
+
+Created basic User Entity (Schema)
+
+# TypeORM
+
+Injected user Repository into user Service
+
+Added TypeORMModule to User Module

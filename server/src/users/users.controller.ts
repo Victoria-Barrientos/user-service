@@ -3,10 +3,13 @@ import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
+import { UsersService } from './users.service';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
+    constructor(private readonly userService: UsersService) {}
+
     // GET /users
     @Get()
     @ApiResponse({ status: 200, description: "Return all users."})
@@ -17,16 +20,14 @@ export class UsersController {
         description: "Filter by deleted users (true or false)"
     })
     getUsers(@Query('deleted', ParseBoolPipe) deleted: boolean) {
-        return [];
+        return this.userService.findAll(deleted)
     }
     
     // GET /users/:id
     @Get(":id")
     @ApiResponse({ status: 200, description: "Return user by id"})
-    getOneUser(@Param("id") id: string) {
-        return {
-            id
-        };
+    getOneUser(@Param("id") id: number) {
+        return this.userService.findById(id)
     }
 
     // POST /users/new
@@ -35,9 +36,7 @@ export class UsersController {
     @ApiResponse({ status: 400, description: 'Invalid request data' })
     @ApiBody({ type: CreateUserDto})
     createUser(@Body() createUserDto: CreateUserDto) {
-        return {
-            name: createUserDto.name
-        };
+        return this.userService.create(createUserDto)
     }
 
     //PUT /users/:id
@@ -45,18 +44,15 @@ export class UsersController {
     @ApiResponse({ status: 200, description: 'User updated successfully', type: UserResponseDto })
     @ApiResponse({ status: 404, description: 'User not found' })
     @ApiBody({ type:  UpdateUserDto })
-    updateUser(@Param("id") id: string, @Body() updateUserDto: UpdateUserDto) {
-        return {
-            id,
-            name: updateUserDto.name
-        };
+    updateUser(@Param("id") id: number, @Body() updateUserDto: UpdateUserDto) {
+        return this.userService.update(id, updateUserDto)
     }
 
     // DELETE /users/:id
     @Delete(":id")
     @ApiResponse({ status: 204, description: 'User deleted successfully', type: UserResponseDto })
     @ApiResponse({ status: 404, description: 'User not found' })
-    removeUser(@Param("id") id: string) {
-        return {}
+    removeUser(@Param("id") id: number) {
+        return this.userService.remove(id)
     }
 }
