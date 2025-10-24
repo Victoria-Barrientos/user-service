@@ -1,5 +1,23 @@
-# user-service
-User Service Scaffolding with TS, NestJS and Swagger
+# About User-service
+
+A monorepo that offers a user database service, authentication and autorization.
+
+# Technologies
+
+- TypeScript
+- Nest JS
+- PostgreSQL
+- Type ORM
+- Swagger
+- Docker
+
+# Folder Structure
+
+/user-service
+  ├── database/
+  ├── server/
+  ├── docker-compose.yml
+  └── .gitignore
 
 # Started Nest app
 
@@ -50,3 +68,9 @@ Created basic User Entity (Schema)
 Injected user Repository into user Service
 
 Added TypeORMModule to User Module
+
+# Docker
+
+Created Dockerfile from modern node alpine image 
+
+docker build -t nest-dev . --progress=plain

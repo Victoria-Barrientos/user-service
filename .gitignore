@@ -1,8 +1,9 @@
 # compiled output
-/dist
-/node_modules
+/server/dist
+/database/data
+/server/node_modules
 /build
-
+/server/.dockerignore
 # Logs
 logs
 *.log
